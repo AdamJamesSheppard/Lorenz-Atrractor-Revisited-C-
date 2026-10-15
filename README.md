@@ -19,14 +19,14 @@ Arguments: steps, timestep, fresh output path, x0, y0, z0; optionally sigma, rho
 beta. Defaults: (10,28,8/3). Output includes the initial state and exactly STEPS
 updates, with columns `t,x,y,z`. Time starts at zero, final time is STEPS×DT.
 The tests need a C++17 compiler and SciPy; the generator itself needs neither
-Python nor SciPy. Existing `plotter.py` reads the historical whitespace format,
-not this CSV. Record the exact command, commit/compiler version and output hash
+Python nor SciPy. `plotter.py` reads this CSV; run `python plotter.py trajectory.csv`. Record the exact command, commit/compiler version and output hash
 when using trajectories for an experiment. Concurrent writers to the same output
 path are unsupported. A failed run's partial output must not be accepted.
 
 ## Historical implementation and audit (2026-10-11)
 
-`RungeKutta.cpp` and `plotter.py` remain unchanged as historical experiments.
+The pre-repair `RungeKutta.cpp` and `plotter.py` are available in Git history.
+Both entry points were repaired on 15 October 2026, as documented below.
 The original source attempts to parallelise sequentially dependent timesteps,
 shares mutable state, refers to undeclared OpenMP private variables, writes the
 initial state over the first update, and uses non-reproducible random initialisation.
@@ -41,3 +41,6 @@ SciPy DOP853. Reference API/method attribution:
 DOP853 is an independent algorithm; agreement is numerical evidence, not proof
 of long-time chaotic trajectory accuracy or attractor-law convergence. No new
 benchmark speedup or scientific dataset qualification is claimed.
+
+## Entry-point repairs — 15 October 2026
+The legacy RungeKutta.cpp entry point now compiles the tested sequential solver. The plotter reads its CSV format, accepts a path and validates finite ordered data. Historical versions remain available in Git history.

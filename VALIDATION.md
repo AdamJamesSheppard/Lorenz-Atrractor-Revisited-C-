@@ -1,3 +1,14 @@
+# Entry-point repair validation — 2026-10-15
+
+**10/10 tests passed** with `python -m unittest discover -s tests -v`.
+
+The legacy entry point additionally compiled with C++17 -Wall -Wextra -Werror and completed a ten-step smoke run. Plotter tests check CSV compatibility and invalid data. No long-time chaotic-accuracy guarantee.
+
+Environment: Python 3.12.3, NumPy 1.26.4, pandas 3.0.6, SciPy 1.11.4, scikit-learn 1.9.1. Dependencies were supplied in an isolated task environment.
+Self-review by implementing assistant; no independent assessment or CI success is inferred.
+
+## Earlier validation record
+
 # Repair validation — 2026-10-11
 
 Historical base: `11020bc96423a5c9b2c3e67bc60975fa6f3df89f`.
